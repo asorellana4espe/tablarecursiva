@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="aplicacion">
+        <div v-for="item in infoApi" :key="item.encid">
+            {{ item.name }}
+        </div><br>
+    </div>
+    <script type="text/javascript">
+        new Vue({
+            el:"#aplicacion",
+            data:{
+                infoApi: []
+            },
+            methods:{
+                addData: function(){
+                    this.infoApi.forEach(element => {
+                        element.append("developer_name","Sebastian Orellana");
+                        element.append("abilities","PHP, laravel, js, css, html, c#");
+                    });
+                }
+            },
+            mounted(){
+                axios.get("http://umani.nexosinc.com/api/employee").then(
+                    response=>this.infoApi=response.data.employee.data
+                );
+                this.addData();
+            }
+        })
+    </script>
+</body>
+</html>
+
